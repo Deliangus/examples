@@ -19,6 +19,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class OverlayView extends View {
 
   @Override
   public synchronized void draw(final Canvas canvas) {
+    super.draw(canvas);
     for (final DrawCallback callback : callbacks) {
       callback.drawCallback(canvas);
     }
@@ -43,6 +45,6 @@ public class OverlayView extends View {
 
   /** Interface defining the callback for client classes. */
   public interface DrawCallback {
-    public void drawCallback(final Canvas canvas);
+    void drawCallback(final Canvas canvas);
   }
 }

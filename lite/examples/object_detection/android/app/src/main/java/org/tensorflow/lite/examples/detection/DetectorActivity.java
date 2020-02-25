@@ -27,12 +27,11 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.widget.Toast;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.customview.OverlayView.DrawCallback;
 import org.tensorflow.lite.examples.detection.env.BorderedText;
@@ -41,6 +40,10 @@ import org.tensorflow.lite.examples.detection.env.Logger;
 import org.tensorflow.lite.examples.detection.tflite.Classifier;
 import org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIModel;
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
@@ -200,9 +203,50 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
             for (final Classifier.Recognition result : results) {
               final RectF location = result.getLocation();
-              if (location != null && result.getConfidence() >= minimumConfidence) {
+              //Log.e("title", "|"+result.getTitle()+"|");
+              if (location != null && result.getTitle().equals("person") && result.getConfidence() >= minimumConfidence) {
                 canvas.drawRect(location, paint);
+                int[][][] color_map = new int[65][65][65];
 
+                int width = Math.abs((int) (location.left - location.right));
+                int height = Math.abs((int) (location.top - location.bottom));
+                int[] pixels = new int[width * height];
+                if (location.left > 0 && location.right < cropCopyBitmap.getWidth() && location.top > 0 && location.bottom < cropCopyBitmap.getHeight()) {
+                  Log.e("Location", "" + location.left + "\t" + location.right + "\t" + location.top + "\t" + location.bottom + "\t" + height + "\t" + width);
+                  //*
+                  for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+
+                      int x = i + Math.min((int) location.top, (int) location.bottom);
+                      int y = j + Math.min((int) location.left, (int) location.right);
+                      //Log.e("Position", "" + x + "\t" + y);
+                      pixels[i * width + j] = cropCopyBitmap.getPixel(x, y);
+                    }
+                  }
+
+                  for (int color : pixels) {
+
+                    int R = (color & 0x00FF0000) / 0x0000FFFF / 4;
+                    int G = (color & 0x0000FF00) / 0x000000FF / 4;
+                    int B = (color & 0x000000FF) / 4;
+                    //cLog.e("Position", "" + R + "\t" + G + "\t" + B + "\t" + color);
+                    color_map[R][G][B]++;
+                  }
+
+                  int maxcolor = 0;
+                  int count = 0;
+
+                  for (int r = 0; r < 65; r++)
+                    for (int g = 0; g < 65; g++)
+                      for (int b = 0; b < 65; b++) {
+                        if (color_map[r][g][b] > count) {
+                          maxcolor = ((r * 4) << 8) | ((g * 4) << 4) | (b * 4);
+                        }
+                      }
+                  //Log.e("MAX Pixels", "" + maxcolor);
+                  //TODO cropCopyBitmap
+                  // */
+                }
                 cropToFrameTransform.mapRect(location);
 
                 result.setLocation(location);
@@ -238,12 +282,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     return DESIRED_PREVIEW_SIZE;
   }
 
-  // Which detection model to use: by default uses Tensorflow Object Detection API frozen
-  // checkpoints.
-  private enum DetectorMode {
-    TF_OD_API;
-  }
-
   @Override
   protected void setUseNNAPI(final boolean isChecked) {
     runInBackground(() -> detector.setUseNNAPI(isChecked));
@@ -252,5 +290,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   @Override
   protected void setNumThreads(final int numThreads) {
     runInBackground(() -> detector.setNumThreads(numThreads));
+  }
+
+  // Which detection model to use: by default uses Tensorflow Object Detection API frozen
+  // checkpoints.
+  private enum DetectorMode {
+    TF_OD_API;
   }
 }

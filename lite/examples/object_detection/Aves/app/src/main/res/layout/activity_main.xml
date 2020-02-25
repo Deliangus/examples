@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_key_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_0" />
+
+            <TextView
+                android:id="@+id/tv_key_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_1" />
+
+            <TextView
+                android:id="@+id/tv_key_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_2" />
+
+            <TextView
+                android:id="@+id/tv_key_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_3" />
+
+            <TextView
+                android:id="@+id/tv_key_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_4" />
+
+            <TextView
+                android:id="@+id/tv_key_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_5" />
+
+            <TextView
+                android:id="@+id/tv_key_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:text="tv_key_6" />
+
+            <TextView
+                android:id="@+id/tv_key_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_7" />
+
+            <TextView
+                android:id="@+id/tv_key_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_8" />
+
+            <TextView
+                android:id="@+id/tv_key_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_9" />
+
+            <TextView
+                android:id="@+id/tv_key_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_10" />
+
+            <TextView
+                android:id="@+id/tv_key_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_11" />
+
+            <TextView
+                android:id="@+id/tv_key_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_12" />
+
+            <TextView
+                android:id="@+id/tv_key_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_13" />
+
+            <TextView
+                android:id="@+id/tv_key_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_key_14" />
+
+            <TextView
+                android:id="@+id/tv_key_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="tv_key_15" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_value_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_0" />
+
+            <TextView
+                android:id="@+id/tv_value_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_1" />
+
+            <TextView
+                android:id="@+id/tv_value_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_2" />
+
+            <TextView
+                android:id="@+id/tv_value_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_3" />
+
+            <TextView
+                android:id="@+id/tv_value_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_4" />
+
+            <TextView
+                android:id="@+id/tv_value_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_5" />
+
+            <TextView
+                android:id="@+id/tv_value_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_6" />
+
+            <TextView
+                android:id="@+id/tv_value_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_7" />
+
+            <TextView
+                android:id="@+id/tv_value_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_8" />
+
+            <TextView
+                android:id="@+id/tv_value_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_9" />
+
+            <TextView
+                android:id="@+id/tv_value_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_10" />
+
+            <TextView
+                android:id="@+id/tv_value_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_11" />
+
+            <TextView
+                android:id="@+id/tv_value_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_12" />
+
+            <TextView
+                android:id="@+id/tv_value_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_13" />
+
+            <TextView
+                android:id="@+id/tv_value_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_14" />
+
+            <TextView
+                android:id="@+id/tv_value_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="tv_value_15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
