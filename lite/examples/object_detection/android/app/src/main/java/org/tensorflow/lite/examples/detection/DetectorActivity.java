@@ -42,8 +42,12 @@ import org.tensorflow.lite.examples.detection.tflite.TFLiteObjectDetectionAPIMod
 import org.tensorflow.lite.examples.detection.tracking.MultiBoxTracker;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
@@ -206,13 +210,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
               //Log.e("title", "|"+result.getTitle()+"|");
               if (location != null && result.getTitle().equals("person") && result.getConfidence() >= minimumConfidence) {
                 canvas.drawRect(location, paint);
-                int[][][] color_map = new int[65][65][65];
 
                 int width = Math.abs((int) (location.left - location.right));
                 int height = Math.abs((int) (location.top - location.bottom));
-                int[] pixels = new int[width * height];
+                Map<String, Integer> pixels = new HashMap<>();
                 if (location.left > 0 && location.right < cropCopyBitmap.getWidth() && location.top > 0 && location.bottom < cropCopyBitmap.getHeight()) {
-                  Log.e("Location", "" + location.left + "\t" + location.right + "\t" + location.top + "\t" + location.bottom + "\t" + height + "\t" + width);
+                  //Log.e("Location", "" + location.left + "\t" + location.right + "\t" + location.top + "\t" + location.bottom + "\t" + height + "\t" + width);
                   //*
                   for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
@@ -220,30 +223,22 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                       int x = i + Math.min((int) location.top, (int) location.bottom);
                       int y = j + Math.min((int) location.left, (int) location.right);
                       //Log.e("Position", "" + x + "\t" + y);
-                      pixels[i * width + j] = cropCopyBitmap.getPixel(x, y);
+                      String pixel = String.format("%08X", cropCopyBitmap.getPixel(x, y));
+                      if (pixels.containsKey(pixel)) {
+                        pixels.put(pixel, pixels.get(pixel) + 1);
+                      } else {
+                        pixels.put(pixel, 0);
+                      }
                     }
                   }
 
-                  for (int color : pixels) {
+                  List<Map.Entry<String, Integer>> pixel_list = new ArrayList<>(pixels.entrySet());
 
-                    int R = (color & 0x00FF0000) / 0x0000FFFF / 4;
-                    int G = (color & 0x0000FF00) / 0x000000FF / 4;
-                    int B = (color & 0x000000FF) / 4;
-                    //cLog.e("Position", "" + R + "\t" + G + "\t" + B + "\t" + color);
-                    color_map[R][G][B]++;
-                  }
+                  Collections.sort(pixel_list, (Map.Entry<String, Integer> t1, Map.Entry<String, Integer> t2) -> {
+                    return t2.getValue().compareTo(t1.getValue());
+                  });
 
-                  int maxcolor = 0;
-                  int count = 0;
-
-                  for (int r = 0; r < 65; r++)
-                    for (int g = 0; g < 65; g++)
-                      for (int b = 0; b < 65; b++) {
-                        if (color_map[r][g][b] > count) {
-                          maxcolor = ((r * 4) << 8) | ((g * 4) << 4) | (b * 4);
-                        }
-                      }
-                  //Log.e("MAX Pixels", "" + maxcolor);
+                  Log.e("MAX Pixels", pixel_list.get(0).toString() + "\t" + pixel_list.get(1).toString() + "\t" + pixel_list.get(2).toString());
                   //TODO cropCopyBitmap
                   // */
                 }
